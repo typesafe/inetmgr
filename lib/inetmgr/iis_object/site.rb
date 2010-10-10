@@ -1,6 +1,7 @@
+
 class Site < IisObject
 
-	prop "application_pool",          "applicationPool",                Proc.new { |a| a },      Proc.new {|value| value }
+	prop :auto_start,          :serverAutoStart
 
   def add_virtual_directory name, physical_directory
     get_applications[0].add_virtual_directory name, physical_directory
@@ -12,7 +13,6 @@ class Site < IisObject
 	    end
 	end
   
-
     def get_applications
 	    apps = []
         @element.for_each do |a|

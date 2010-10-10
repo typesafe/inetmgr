@@ -1,51 +1,27 @@
 require '../lib/inetmgr'
 
-task :default => [:pool]
+task :default => [:show_all_settings]
 
-application_pool :pool do |pool|
-	pool.name = "bla"
-	pool.auto_start = false
-	pool.runtime_version = "v4.0"
-	pool.pipeline_mode = "Integrated"
-	pool.always_running = true
-	pool.enable_32bit = false
-end
-
-
-task :all => [:provider ]
-
-auto_start_provider :provider do |p|
-	p.name = "fooobar"
-	p.type = "foo.bar, foo"
-end
-
-application :app do |a|
-	a.site = "thuis.jolena.be"
-	a.path = "/application"
-	a.physical_path = "d:\\temp"
-	a.preloader = "preloader"
-end
-
-virtual_directory :dir do |dir|
-	dir.path = "/dir"
-	dir.physical_path = "d:\\temp"
-	dir.site = "foobar"
-end
-
-
-
-site :site do |site|
-	site.name = "fooobar"
-	site.physical_path = "D:\\temp"
-	site.bindings = [ BindingInformation.new("*:80:www.foobar.com", "http") ]
-	#site.auto_start = false
-	#site.application_pool = "foobar"
-	#site.enabledProtocols = "http"
+task :show_all_settings do
   
-	#site.preloader = nil
-	#site.enable_anonymous_authentication = true
-	#site.enable_basic_authentication = true
-	#site.enable_windows_authentication = true
+  cfg = IisConfiguration.new
+  
+  puts "APPLICATION POOLS:"
+  puts ""
+  puts "name                     |auto_start|runtime_version|classic_pipeline|always_running"
+  puts "------------------------------------------------------------------------------------"
+  cfg.get_application_pools.each do |p|
+    puts sprintf "%-25s|%-10s|%-15s|%-16s|%-s", p.name, p.auto_start, p.runtime_version, p.classic_pipeline, p.always_running
+  end
+
+  puts "SITES:"
+  puts ""
+  puts "name                     |auto_start"
+  puts "------------------------------------------"
+  cfg.get_sites.each do |s|
+    puts sprintf "%-25s|%-10s", s.name, s.auto_start
+  end
 end
+
 
 

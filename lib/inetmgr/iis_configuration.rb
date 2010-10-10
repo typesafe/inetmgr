@@ -18,7 +18,7 @@ class IisConfiguration
 
     def add_site name
 	    section = get_sites_section
-		e = section.add_element("site") do |e|
+      e = section.add_element("site") do |e|
 			e.set "name", name
 			e.set "id", section.count + 1
 		end
@@ -28,11 +28,11 @@ class IisConfiguration
     end
 
     def get_sites
-		sites = []
-        get_sites_section.for_each do |p|
-			sites << Site.new(p)
-        end
-        sites
+      sites = []
+      get_sites_section.for_each do |p|
+        sites << Site.new(p)
+      end
+      sites
     end
 
     def get_application_pools

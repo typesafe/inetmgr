@@ -34,9 +34,9 @@ class WIN32OLE
 
 	def for_each
 		self.count.times do |i|
-			p = self.Collection.Item i
-			yield p
-		end
+      p = self.Collection.Item i      
+      yield p      
+    end
 	end
 
     def first
