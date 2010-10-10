@@ -1,6 +1,7 @@
 require 'rake/tasklib'
 
 module Inetmgr
+
   class InetmgrTask < ::Rake::TaskLib
     attr_accessor :name
 
@@ -52,7 +53,7 @@ def create_task(taskname, task_object_proc, &execute_body)
 end
 
 
-create_task :applicationpool, Proc.new { ApplicationPool.new } do |pool|
+create_task :application_pool, Proc.new { ApplicationPool.new } do |pool|
   pool.create
 end
 

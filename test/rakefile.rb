@@ -1,6 +1,16 @@
 require '../lib/inetmgr'
 
-task :default => [:app]
+task :default => [:pool]
+
+application_pool :pool do |pool|
+	pool.name = "bla"
+	pool.auto_start = false
+	pool.runtime_version = "v4.0"
+	pool.pipeline_mode = "Integrated"
+	pool.always_running = true
+	pool.enable_32bit = false
+end
+
 
 task :all => [:provider ]
 
@@ -10,7 +20,7 @@ auto_start_provider :provider do |p|
 end
 
 application :app do |a|
-	a.site = "foobar"
+	a.site = "thuis.jolena.be"
 	a.path = "/application"
 	a.physical_path = "d:\\temp"
 	a.preloader = "preloader"
@@ -22,14 +32,7 @@ virtual_directory :dir do |dir|
 	dir.site = "foobar"
 end
 
-applicationpool :pool do |pool|
-	pool.name = "bla"
-	pool.auto_start = false
-	pool.runtime_version = "v4.0"
-	pool.pipeline_mode = "Integrated"
-	pool.always_running = true
-	pool.enable_32bit = false   
-end
+
 
 site :site do |site|
 	site.name = "fooobar"

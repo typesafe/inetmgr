@@ -1,18 +1,39 @@
-require 'win32ole'
 
 class IisObject
-  attr_reader :admin_manager
 
-  def configure(&block)
-    @admin_manager = WIN32OLE.new "Microsoft.ApplicationHost.WritableAdminManager"
-    @admin_manager.CommitPath = "MACHINE/WEBROOT/APPHOST";
-    def @admin_manager.get_config_section section_name, path = "MACHINE/WEBROOT/APPHOST"
-      self.GetAdminSection(section_name, path)
-    end
+	def initialize element
+		@element = element
+	end
 
-    block.call @admin_manager
-    @admin_manager.CommitChanges
-  end
+	def self.prop name, actual_name, setter, reader
+
+   		 define_method(name) do
+		   reader.call(get_element_prop(actual_name))
+		 end
+
+		 define_method("#{name}=") do |val|
+		   set_element_prop actual_name, setter.call(val)
+		 end
+	end
+
+private
+
+	def method_missing(symbol, *args)
+		puts "method_missing #{symbol}"
+	    name = symbol.to_s
+	    if /=$/.match(name)
+		    @element.set name.sub(/=/, ''), args[0]
+	    else
+		    @element.get name
+		end
+	end
+
+	def set_element_prop(name, val)
+		@element.set name, val
+	end
+
+	def get_element_prop(name)
+		@element.get name
+	end
 
 end
-
