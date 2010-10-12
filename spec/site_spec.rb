@@ -33,13 +33,17 @@ describe "When getting a site's applications" do
 
 	before(:all) do
 		configure do |cfg|
-			@site = cfg.get_sites[0]
-			@apps = @site.get_applications
+			@apps = cfg.get_sites[0].applications
 		end
 	end
 
 	it "at least one item should be returned" do
 		@apps.size.should > 0
+	end
+
+	it "the first app should have path '/'" do
+		@apps[0].path.should == "/"
+		puts @apps[0].auto_start
 	end
 
 end

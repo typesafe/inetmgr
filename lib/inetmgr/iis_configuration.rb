@@ -28,11 +28,7 @@ class IisConfiguration
     end
 
     def get_sites
-      sites = []
-      get_sites_section.for_each do |p|
-        sites << Site.new(p)
-      end
-      sites
+	    IisObjectCollection.new get_sites_section.collection, :site, Site  
     end
 
     def get_application_pools
