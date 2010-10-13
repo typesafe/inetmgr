@@ -1,32 +1,43 @@
 
 class IisObjectCollection
 
-	def initialize element, item_name, type
-		@element = element
+	def initialize element, item_name, type, add_callback = nil
+		@collection_element = element
 		@item_name = item_name
 	    @type = type
+		@add_callback = add_callback
 	end
 
     def size
-	    @element.Count
+	    @collection_element.Count
     end
 
     def [](index)
-		return @type.new @element.Item index
+		return @type.new @collection_element.Item index
     end
 
     def each
-		size.times { |i| yield self[i] }
+			size.times { |i| yield self[i] }
     end
 
     def add
-	   e = @element.add_element @item_name do |e|
-		    yield type.new e
-       end
-       @type.new(e)
+		e = @collection_element.CreateNewElement @item_name.to_s
+	    added = @type.new e
+		@add_callback.call added unless @add_callback.nil?
+	    yield added
+        @collection_element.AddElement e
+		added
     end
 
+	def find 
+		size.times do |i|
+			instance = self[i]
+			return instance if yield(instance)
+		end
+		nil
+	end
+
     def remove(index)
-	    @element.DeleteElement index
+	    @collection_element.DeleteElement index
     end
 end

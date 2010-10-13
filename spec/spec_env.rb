@@ -9,7 +9,7 @@ module RSpecExtensions
 	def configure
 		cfg = IisConfiguration.new
 		yield cfg
-	    #cfg.apply_changes
+	    cfg.apply_changes
 	end
 
     def generate_random_name

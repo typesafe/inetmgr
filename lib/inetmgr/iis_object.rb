@@ -7,11 +7,11 @@ class IisObject
 
 	def self.prop name, actual_name, setter = Proc.new { |v| v }, reader = Proc.new { |v| v }
 		define_method(name.to_s) do
-		  reader.call(get_element_prop(actual_name.to_s))
+		  reader.call(@element.Properties.Item(actual_name.to_s).Value)
 		end
 
 		define_method("#{name.to_s}=") do |val|
-		  set_element_prop actual_name.to_s, setter.call(val)
+		  @element.Properties.Item(actual_name.to_s).Value = setter.call(val)
 		end
 	end
 
@@ -24,6 +24,12 @@ class IisObject
 	def self.children name, item_name, type
 		define_method(name.to_s) do
 			IisObjectCollection.new @element.ChildElements.Item(name.to_s).Collection, item_name.to_s, type
+		end
+	end
+
+	def self.child name, element_name, type
+		define_method(name.to_s) do
+			type.new @element.ChildElements.Item(element_name.to_s)
 		end
 	end
 
@@ -40,14 +46,6 @@ private
 		else
 			@element.Properties.Item(name).Value
 		end
-	end
-
-	def set_element_prop(name, val)
-		@element.set name, val
-	end
-
-	def get_element_prop(name)
-		@element.get name
 	end
 
 end

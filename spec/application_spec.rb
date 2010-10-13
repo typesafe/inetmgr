@@ -1,34 +1,38 @@
 require 'spec_env'
-#
-#describe "When adding an Application to a site" do
-#	before(:all) do
-#		@site = "foobar"
-#		ap = Application.new
-#		ap.site = @pool_name
-#		ap.create
-#		IisObject.commit
-#
-#		s = IIS.get_config_section "system.applicationHost/application"
-#		@created_app = s.get_item_with_name(@pool_name)
-#	end
-#
-#	it "the app should be created" do
-#		@created_pool.should_not be_nil
-#	end
-#
-#	it "the pool should default to no auto start" do
-#		@created_pool.get('autoStart').should == false
-#	end
-#
-#	it "the pool should  default to runtime version 4.0" do
-#		@created_pool.get('managedRuntimeVersion').should == "v4.0"
-#	end
-#
-#	it "the pool should default to integrated pipeline" do
-#		@created_pool.get('managedPipelineMode').should == 0
-#	end
-#
-#	it "the start mode should be set to OnDemand" do
-#		@created_pool.get('startMode').should == 0
-#	end
-#end
+
+describe "When adding an Application to a site" do
+	
+	before(:all) do
+
+		configure do |cfg|
+			site = cfg.get_sites[0]
+			@app_name = "/#{generate_random_name}"
+			site.applications.add do|a|
+				a.path = @app_name
+				a.virtual_directories.add do |vd|
+					vd.path = @app_name
+					vd.physicalPath = "D:\\"
+				end
+			end
+		end
+
+		configure do |cfg|
+			@site = cfg.get_sites[0]
+			@app = @site.applications.find {|a| a.path == @app_name}
+		end
+	end
+
+	it "the app should be added" do
+		@app.should_not be_nil
+	end
+
+	it "the app should contain the associated virtual directory" do
+		@app.virtual_directories.size.should == 1
+	end
+
+	it "the virtual directory physical path should be set" do
+		@app.virtual_directories[0].physicalPath.should == "D:\\"
+	end
+
+end
+

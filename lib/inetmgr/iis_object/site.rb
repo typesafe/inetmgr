@@ -1,7 +1,7 @@
 
 class Site < IisObject
 
-	prop :auto_start,          :serverAutoStart
+	prop :auto_start, :serverAutoStart
 
 	collection :applications, :application, Application
 

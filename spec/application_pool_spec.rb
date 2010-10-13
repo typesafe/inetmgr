@@ -1,49 +1,17 @@
 require 'spec_env'
 
-describe "When getting an application pool by name" do
-
-	before(:all) do
-		configure do |cfg|
-			cfg = IisConfiguration.new
-			name = cfg.get_application_pools[0].name
-
-			@pool = cfg.get_application_pool name
-		end
-	end
-
-	it "it should be returned" do
-		@pool.should_not be_nil
-	end
-
-end
-
-describe "When getting an application pool that does not exist" do
-
-	before(:all) do
-		configure do |cfg|
-			@pool = cfg.get_application_pool "mqklsjdmflkqsjdmfkljname"
-		end
-	end
-
-	it "nil should be returned" do
-		@pool.should be_nil
-	end
-
-end
-
 describe "When adding a new application pool" do
 
 	before(:all) do
-		configure do |cfg|
-			@name = "foobar"
-			cfg.add_application_pool @name
-
-			@pool = cfg.get_application_pool(@name)
+		@pools = IisConfiguration.new.get_application_pools
+		@before_count = @pools.size
+		@pool = @pools.add do |p|
+			p.name = "tralala"
 		end
 	end
 
 	it "it should be present in the application pool collection" do
-		@pool.should_not be_nil
+		@pools.size.should == @before_count + 1
 	end
 
 	it "the auto_start value should default to false" do
@@ -72,27 +40,28 @@ describe "When updating an application pool" do
 
 	before(:all) do
 
+		@name = generate_random_name()
+
 		configure do |cfg|
-			@name = generate_random_name()
-			cfg.add_application_pool @name
 
-			pool = cfg.get_application_pool(@name)
-			puts pool.startMode
+			pool = cfg.get_application_pools.add { |p| p.name = @name } # defaults
 
-			pool.name = "new name"
 			pool.auto_start = true
 			pool.runtime_version = "v4.0"
-
 			pool.classic_pipeline = true
 			pool.enable_32bit = true
 			pool.always_running = true
 
-			@pool = cfg.get_application_pool "new name"
 		end
+
+		configure do |cfg|
+			@pool = cfg.get_application_pools.find { |p| p.name == @name }
+		end
+		
 	end
 
 	it "the name should be changed" do
-		@pool.name.should == "new name"
+		@pool.name.should == @name
 	end
 
 	it "the auto_start value should be changed" do
