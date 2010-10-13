@@ -1,14 +1,39 @@
 = About inetmgr
 
-inetmgr is a suite of Rake tasks to help automate the configuration of IIS site, applications and other settings.
+inetmgr is primarily a library that helps automate the configuration of IIS. It
+provides a straightforward ruby-like interface on top of the configuration API,
+which lets you inspect add/remove and modify various IIS objects like sites,
+application pools, bindings, virtual directories, etc.
+
+Additionally, intemgr provides some basic rake tasks that help adding IIS
+deployment aspects to your build (& deploy) process.
 
 == How to install
+
+Get the gem:
 
 	> gem install inetmgr
 	 	
 That should do the trick. Another option would be forking the source from github:
 	 	
 	> git clone git@github.com:typesafe/inetmgr.git inetmgr
+
+== How to use
+
+*Note*: inetmgr requires a Windows machine (well, duh) with IIS7+ and depends on
++WIN32OLE+ (for the sake of wrapping), which should be available by default.
+
+
+	require 'inetmgr'
+
+	cfg = IisConfiguration.new
+
+	cfg.get_sites.each do |site|
+		puts 'site: #{site.name}'
+	end
+
+	cfg.application_pools.add { |p| p.name = "newPool" }
+	cfg.apply_changes
 
 == License
 
