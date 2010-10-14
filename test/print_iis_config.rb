@@ -6,7 +6,7 @@ sites = cfg.get_sites
 pools = cfg.get_application_pools
 
 pools.each do |p|
-	puts "POOL: #{p.name}"
+	puts "\r\nPOOL: #{p.name}"
 	puts "----"
 
 	puts " - process_model:"

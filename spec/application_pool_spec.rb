@@ -36,7 +36,7 @@ describe "When adding a new application pool" do
 	end
 end
 
-describe "When updating an application pool" do
+describe "When updating application pool" do
 
 	before(:all) do
 
