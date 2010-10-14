@@ -1,4 +1,4 @@
-
+# Represents a collection of IIS configuration objects.
 class IisObjectCollection
 
 	def initialize element, item_name, type, add_callback = nil

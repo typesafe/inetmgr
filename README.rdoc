@@ -21,8 +21,7 @@ That should do the trick. Another option would be forking the source from github
 == How to use
 
 *Note*: inetmgr requires a Windows machine (well, duh) with IIS7+ and depends on
-+WIN32OLE+ (for the sake of wrapping), which should be available by default.
-
+WIN32OLE (for the sake of wrapping), which should be available by default.
 
 	require 'inetmgr'
 
