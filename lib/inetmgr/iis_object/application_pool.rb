@@ -1,6 +1,7 @@
 
 class ProcessModel < IisObject
 
+	prop :logon_type, :logonType, lambda {|value| value == :batch ? 0 : 1 }, lambda { |a| a == 0 ? :batch : :service }
 end
 
 class PeriodicRestart < IisObject
