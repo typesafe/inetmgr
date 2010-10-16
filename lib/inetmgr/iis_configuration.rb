@@ -1,10 +1,16 @@
 
-# Represents the local IIS configuration settings (meta base)
+# Represents the local IIS configuration settings (meta base).
 class IisConfiguration
 	
 	def initialize
 		@admin_manager = WIN32OLE.new "Microsoft.ApplicationHost.WritableAdminManager"
 		@admin_manager.CommitPath = "MACHINE/WEBROOT/APPHOST";
+	end
+
+	def self.configure
+		cfg = IisConfiguration.new
+		yield cfg
+		cfg.apply_changes
 	end
 
 	# applies/commits all changes made since the creation of the
