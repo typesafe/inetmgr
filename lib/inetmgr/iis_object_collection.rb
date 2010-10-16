@@ -17,7 +17,7 @@ class IisObjectCollection
     end
 
     def each
-			size.times { |i| yield self[i] }
+		size.times { |i| yield self[i] }
     end
 
     def add
