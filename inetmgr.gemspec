@@ -5,7 +5,7 @@ spec = Gem::Specification.new do |s|
 
 	s.platform   = 'mswin32'
     s.name       = "inetmgr"
-    s.version    = "0.2.0"
+    s.version    = "0.2.1"
     s.summary    = "A library for managing IIS configuration settings."
     s.description = "inetmgr allows you to inspect/configure IIS configuration sections and elements."
 
