@@ -86,3 +86,35 @@ describe "When updating application pool" do
 	end
 
 end
+
+describe "When updating an application pool's proces model" do
+
+	before(:all) do
+
+		@name = generate_random_name()
+
+		configure do |cfg|
+
+			pool = cfg.get_application_pools.add { |p| p.name = @name } # defaults
+
+			m = pool.process_model
+			m.logon_type = :service
+			m.identity_type = :network_service
+		end
+
+		configure do |cfg|
+			pool = cfg.get_application_pools.find { |p| p.name == @name }
+			@proces_model = pool.process_model
+		end
+
+	end
+
+	it "the logon type should be changed" do
+		@proces_model.logon_type.should == :service
+	end
+
+	it "the identity type should be changed" do
+		@proces_model.identity_type.should == :network_service
+	end
+
+end

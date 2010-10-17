@@ -17,32 +17,45 @@ pools.each do |p|
 	puts " - runtime_version:\t #{p.runtime_version}"
 	puts " - passAnonymousToken:\t #{p.passAnonymousToken}"
 
-	puts " - process_model:"
-	puts "    - identityType: #{p.process_model.identityType}"
+	puts "\r\n - process_model:"
+	puts "    - identity_type: #{p.process_model.identity_type}"
 	puts "    - idleTimeout: #{p.process_model.idleTimeout}"
 	puts "    - logon_type: #{p.process_model.logon_type}"
+	puts "    - user_name '#{p.process_model.user_name}'"
+	puts "    - password '#{p.process_model.password.gsub(/./, '*')}'"
+	puts "    - load_user_profile: #{p.process_model.load_user_profile}"
+	
+	puts "    - load_user_profile: #{p.process_model.load_user_profile}"
+	puts "    - load_user_profile: #{p.process_model.load_user_profile}"
+	puts "    - load_user_profile: #{p.process_model.load_user_profile}"
+	puts "    - load_user_profile: #{p.process_model.load_user_profile}"
 
-	puts " - recycling:"
+	puts "\r\n - recycling:"
 	puts "    - logEventOnRecycle: #{p.recycling.logEventOnRecycle}"
 	puts "    - periodic_restart.schedulecount: #{p.recycling.periodic_restart.schedule.size}"
+	puts "----------------------------"
 
 end
 
 sites.each do |s|
 
 	puts "SITE: #{s.name} #{s.bindings.size}"
-
+	puts "----"
+	
 	s.bindings.each do |b|
-		puts "binding: #{b.protocol} - #{b.binding_information}"
+		puts " - binding: #{b.protocol}|#{b.binding_information}"
 	end
 
+	puts " - limits: bandwitdth: #{s.limits.max_bandwidth}, connections: #{s.limits.max_connections}, connection timout: #{s.limits.connection_timeout}"
+	
 	s.applications.each do |a|
-		puts "    app: #{a.path}"
+		puts " - app: #{a.path}"
 		a.virtual_directories.each do |d|
-			puts "       dir: #{d.path}"
+			puts "    - dir: #{d.path} -> #{d.physical_path}"
 		end
 	end
-
+	puts "----------------------------"
+	
 end
 
 
