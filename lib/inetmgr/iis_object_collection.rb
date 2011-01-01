@@ -12,6 +12,10 @@ class IisObjectCollection
 	    @collection_element.Count
     end
 
+	def count
+		size
+	end
+	
     def [](index)
 		return @type.new @collection_element.Item index
     end
@@ -35,6 +39,10 @@ class IisObjectCollection
 			return instance if yield(instance)
 		end
 		nil
+	end
+	
+	def exists(name)
+		!(find {|s| s.name == name}).nil?
 	end
 
     def remove(index)

@@ -1,4 +1,4 @@
-require 'spec_env'
+require './spec_env.rb'
 
 describe "When getting the configured sites" do
 
@@ -9,7 +9,7 @@ describe "When getting the configured sites" do
 	end
 
 	it "at least one item should be returned" do
-		@sites.size > 1
+		@sites.size.should > 1
 	end
 
 end

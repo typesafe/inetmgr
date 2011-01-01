@@ -1,6 +1,5 @@
-require 'spec'
+require 'rspec'
 require 'test/unit'
-require 'spec_env'
 require 'uuid'
 require File.expand_path(File.join(File.dirname(__FILE__), "../lib/inetmgr"))
 
@@ -18,6 +17,6 @@ module RSpecExtensions
 
 end
 
-Spec::Runner.configure do |config|
+RSpec::Runner.configure do |config|
   config.include RSpecExtensions
 end

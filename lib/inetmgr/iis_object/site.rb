@@ -9,8 +9,8 @@ end
 
 class Site < IisObject
 
-	#name
-	#id
+	# name
+	# id
 
 	prop :auto_start, :serverAutoStart
 
@@ -19,4 +19,11 @@ class Site < IisObject
     children :bindings, :binding, BindingInformation
 
 	child :limits, :limits, SiteLimit
+
+	def configure
+		cfg = SiteConfiguration.new name
+		yield cfg
+		cfg.apply_changes
+	end
+
 end
