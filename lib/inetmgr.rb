@@ -20,4 +20,6 @@ Dir.glob(File.join(path, 'inetmgr/iis_object/*.rb')).each do |f|
 	require f unless requires.include?(f)
 end
 
+require File.join(path, 'inetmgr/configuration.rb')
 require File.join(path, 'inetmgr/iis_configuration.rb')
+require File.join(path, 'inetmgr/Site_configuration.rb')

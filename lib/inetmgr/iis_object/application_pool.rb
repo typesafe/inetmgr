@@ -21,8 +21,6 @@ end
 
 class ApplicationPool < IisObject
 	
-
-
 	prop :auto_start,        :autoStart,              lambda { |a| a == true ? "true" : "false" },            lambda {|value| value == "true" }
 	prop :runtime_version,   :managedRuntimeVersion
 	prop :classic_pipeline,  :managedPipelineMode,    lambda { |a| a == true ? 1 : 0 },                       lambda {|value| value.to_i == 1 }
