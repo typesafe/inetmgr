@@ -1,42 +1,150 @@
 = About inetmgr
 
-inetmgr is primarily a library that helps automate the configuration of IIS. It
-provides a straightforward ruby-like interface on top of the configuration API,
-which lets you inspect add/remove and modify various IIS objects like sites,
-application pools, bindings, virtual directories, etc.
+inetmgr is primarily a library that helps automate the configuration of IIS (7+).
+It is built on top of the standard IIS configuration API (http://www.iis.net/ConfigReference)
+but provides a more elegant, ruby-like interface which, typically, can be used
+from your rake tasks.
 
-Additionally, intemgr provides some basic rake tasks that help adding IIS
-deployment aspects to your build (& deploy) process.
+The inetmgr library lets you inspect add/remove and alter various IIS objects
+like sites, application pools, bindings, virtual directories, etc.
 
 == How to install
 
 Get the gem:
 
-	> gem install inetmgr
-	 	
-That should do the trick. Another option would be forking the source from github:
-	 	
-	> git clone git@github.com:typesafe/inetmgr.git inetmgr
+ gem install inetmgr
+
+That should do the trick. Another option would be forking the source from the
+github repository:
+
+ git clone git@github.com:typesafe/inetmgr.git inetmgr
 
 == How to use
 
-*Note*: inetmgr requires a Windows machine (well, duh) with IIS7+ and depends on
-WIN32OLE (for the sake of wrapping), which should be available by default.
+*_Notes_*: inetmgr requires a Windows machine (well, duh) with IIS7+ and depends
+on WIN32OLE (obviously), which should be available by default. Inetmgr has only
+been tested with Ruby version 1.9.2 (on a Windows 7 box).
 
-	require 'inetmgr'
+=== Create a new site
 
-	cfg = IisConfiguration.new
+The following code creates a new web site with an http and https binding. Note
+the use of the +configure+ method to ensure the changes get committed.
 
-	cfg.get_sites.each do |site|
-		puts 'site: #{site.name}'
-	end
+ require 'inetmgr'
 
-	cfg.application_pools.add { |p| p.name = "newPool" }
-	cfg.apply_changes
+ IisConfiguration.configure do |cfg|
+     cfg.get_sites.add do |site|
+         site.name = "Contoso"
+         site.auto_start = true
+         site.bindings.add do |b|
+             b.protocol = "http"
+             b.binding_information = "*:80:www.******.be"
+         end
+
+         site.bindings.add do |b|
+             b.protocol = "https"
+             b.binding_information = "*:443:"
+             b.add_ssl_certificate "e2564766bad7ebec8cf6899caa2a27c6391c4f19", "MY"
+         end
+
+         site.applications.add do |app|
+             app.path = "/"
+             app.virtual_directories.add do |dir|
+                 dir.path = "/"
+                 dir.physical_path = "D:\\sites\\www.******.be"
+             end
+         end
+     end
+ end
+
+=== Print the currently configured pools
+
+This code sample print the currently configured pools. Note the use of a newed
+configuration instance (since were not applying any changes).
+
+ require 'inetmgr'
+ cfg = IisConfiguration.new
+ pools = cfg.get_application_pools
+
+ pools.each do |p|
+     puts "\r\nPOOL: #{p.name}"
+     puts "----"
+     puts " - auto_start:\t #{p.auto_start}"
+     puts " - always_running:\t #{p.always_running}"
+     puts " - CLRConfigFile:\t #{p.CLRConfigFile}"	# not yet mapped
+     puts " - enable_32bit:\t #{p.enable_32bit}"
+     puts " - enableConfigurationOverride:\t #{p.enableConfigurationOverride}"	# not yet mapped
+     puts " - classic_pipeline:\t #{p.classic_pipeline}"
+     puts " - runtime_version:\t #{p.runtime_version}"
+     puts " - passAnonymousToken:\t #{p.passAnonymousToken}"
+
+     puts "\r\n - process_model:"
+     puts "    - identity_type: #{p.process_model.identity_type}"
+     puts "    - idleTimeout: #{p.process_model.idleTimeout}"
+     puts "    - logon_type: #{p.process_model.logon_type}"
+     puts "    - user_name '#{p.process_model.user_name}'"
+     puts "    - password '#{p.process_model.password.gsub(/./, '*')}'"
+     puts "    - load_user_profile: #{p.process_model.load_user_profile}"
+
+     puts "\r\n - recycling:"
+     puts "    - logEventOnRecycle: #{p.recycling.logEventOnRecycle}"
+     puts "    - periodic_restart.schedulecount: #{p.recycling.periodic_restart.schedule.size}"
+     puts "----------------------------"
+ end
+
+The output of the above code would be something like the following:
+
+ POOL: static.******.be
+ ----
+ - auto_start:         false
+ - always_running:         false
+ - CLRConfigFile:
+ - enable_32bit:         false
+ - enableConfigurationOverride:         true
+ - classic_pipeline:         false
+ - runtime_version:
+ - passAnonymousToken:         true
+
+ - process_model:
+    - identity_type: application_pool_identity
+    - idleTimeout: 12000000000
+    - logon_type: batch
+    - user_name ''
+    - password ''
+    - load_user_profile: false
+
+ - recycling:
+     - logEventOnRecycle: 137
+     - periodic_restart.schedulecount: 0
+ ----------------------------
+ 
+ POOL: www.******.be
+ ----
+ - auto_start:         false
+ - always_running:         true
+ - CLRConfigFile:
+ - enable_32bit:         false
+ - enableConfigurationOverride:         true
+ - classic_pipeline:         false
+ - runtime_version:         v4.0
+ - passAnonymousToken:         true
+
+ - process_model:
+    - identity_type: specific_user
+    - idleTimeout: 12000000000
+    - logon_type: batch
+    - user_name 'gino'
+    - password '*********'
+    - load_user_profile: false
+ 
+  - recycling:
+     - logEventOnRecycle: 137
+     - periodic_restart.schedulecount: 0
+ ----------------------------
 
 == License
 
-Copyright (c) 2010 Gino Heyman
+Copyright (c) 2010 Gino Heyman.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
