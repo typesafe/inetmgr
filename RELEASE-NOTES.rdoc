@@ -1,0 +1,35 @@
+= inetmgr Release Notes
+
+== Latest Version (0.3.0)
+
+- more property mappings for ApplicationPool & Site.
+- Added support for site-level configuration (only appSettings, for now).
+
+== Previous Versions
+
+=== 0.2.1
+
+- Added static configure method to IisConfiguratin to support atomic changes:
+
+ IisConfiguration.configure do |cfg|
+     #use cfg param to configure
+ end
+
+- Added some RDoc
+- Added application_pool prop to Application (alias for applicationPool)
+- Added logon_type prop to ProcessModel (alias for logonType)
+- Added physical_path to VirtualDirectory (alias for physicalPath)
+- Extended SSL support to BindingInformation 
+
+=== 0.2.0
+
+Initial version with support for configuring the following IIS/Machine level objects:
+
+- ApplicationPool
+- Application
+- AutoStartProvider
+- Site
+- ProcessModel
+- PeriodicRestart
+- Recycling
+
