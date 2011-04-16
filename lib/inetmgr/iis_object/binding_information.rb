@@ -1,7 +1,7 @@
 
 class BindingInformation < IisObject
 
-	#prop :protocol
+	prop :protocol, :protocol
 	prop :binding_information, :bindingInformation
 	prop :ds_mapper_enabled?, :isDsMapperEnabled
 

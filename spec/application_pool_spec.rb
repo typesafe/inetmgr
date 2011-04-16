@@ -19,8 +19,8 @@ describe "When adding a new application pool" do
 	end
 
 	# TODO: fix this -> it depends on the defaults in the config
-	it "the runtime_version value should default to 'v2.0'" do
-		@pool.runtime_version.should == "v2.0"
+	it "the managed_runtime_version value should default to 'v2.0'" do
+		@pool.managed_runtime_version.should == "v2.0"
 	end
 
 	it "the classic_pipeline value should default to false" do
@@ -47,7 +47,7 @@ describe "When updating application pool" do
 			pool = cfg.get_application_pools.add { |p| p.name = @name } # defaults
 
 			pool.auto_start = true
-			pool.runtime_version = "v4.0"
+			pool.managed_runtime_version = "v4.0"
 			pool.classic_pipeline = true
 			pool.enable_32bit = true
 			pool.always_running = true
@@ -68,8 +68,8 @@ describe "When updating application pool" do
 		@pool.auto_start.should == false
 	end
 
-	it "the runtime_version value should be changed" do
-		@pool.runtime_version.should == "v4.0"
+	it "the managed_runtime_version value should be changed" do
+		@pool.managed_runtime_version.should == "v4.0"
 	end
 
 	it "the classic_pipeline value should be changed" do

@@ -1,11 +1,6 @@
-
-class SiteLimit < IisObject
-
-	prop :max_bandwidth, :maxBandwidth
-	prop :max_connections, :maxConnections
-	prop :connection_timeout, :connectionTimeout
-
-end
+require File.join(File.expand_path(File.dirname(__FILE__)), 'site_limit.rb')
+require File.join(File.expand_path(File.dirname(__FILE__)), 'binding_information.rb')
+require File.join(File.expand_path(File.dirname(__FILE__)), 'application.rb')
 
 class Site < IisObject
 

@@ -1,12 +1,12 @@
 require './spec_env.rb'
 
-describe "When getting a sites app settings" do
+describe "When getting a sites connection strings" do
 
 	before(:all) do
 		iis_cfg = IisConfiguration.new
 		site = iis_cfg.get_sites.find { |s| s.name= 'thuis.jolena.be' }
 		site.configure do |site_cfg|
-			@app_settings = site_cfg.get_app_settings
+			@app_settings = site_cfg.get_connection_strings
 		end
 	end
 
@@ -45,7 +45,7 @@ describe "When adding an app setting" do
 		site.configure do |site_cfg|
 			@previous = site_cfg.get_app_settings.size
 			site_cfg.get_app_settings.add do |setting|
-				setting.key ="foo"
+				setting.key = generate_random_name()
 				setting.value = "bar"
 			end
 		end
