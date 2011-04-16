@@ -11,7 +11,7 @@ task :show_all_settings do
   puts "name                     |auto_start|runtime_version|classic_pipeline|always_running"
   puts "------------------------------------------------------------------------------------"
   cfg.get_application_pools.each do |p|
-    puts sprintf "%-25s|%-10s|%-15s|%-16s|%-s", p.name, p.auto_start, p.runtime_version, p.classic_pipeline, p.always_running
+    puts sprintf "%-25s|%-10s|%-15s|%-16s|%-s", p.name, p.auto_start, p.managed_runtime_version, p.classic_pipeline, p.always_running
   end
 
   puts "SITES:"

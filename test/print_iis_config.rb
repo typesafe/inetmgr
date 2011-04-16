@@ -1,4 +1,4 @@
-require '..\lib\inetmgr.rb'
+require '../lib/inetmgr.rb'
 
 cfg = IisConfiguration.new
 
@@ -14,7 +14,7 @@ pools.each do |p|
 	puts " - enable_32bit:\t #{p.enable_32bit}"
 	puts " - enableConfigurationOverride:\t #{p.enableConfigurationOverride}"	# not yet mapped
 	puts " - classic_pipeline:\t #{p.classic_pipeline}"
-	puts " - runtime_version:\t #{p.runtime_version}"
+	puts " - managed_runtime_version:\t #{p.managed_runtime_version}"
 	puts " - passAnonymousToken:\t #{p.passAnonymousToken}"
 
 	puts "\r\n - process_model:"
@@ -22,14 +22,9 @@ pools.each do |p|
 	puts "    - idleTimeout: #{p.process_model.idleTimeout}"
 	puts "    - logon_type: #{p.process_model.logon_type}"
 	puts "    - user_name '#{p.process_model.user_name}'"
-	puts "    - password '#{p.process_model.password.gsub(/./, '*')}'"
+	puts "    - password '#{p.process_model.password}'"
 	puts "    - load_user_profile: #{p.process_model.load_user_profile}"
 	
-	puts "    - load_user_profile: #{p.process_model.load_user_profile}"
-	puts "    - load_user_profile: #{p.process_model.load_user_profile}"
-	puts "    - load_user_profile: #{p.process_model.load_user_profile}"
-	puts "    - load_user_profile: #{p.process_model.load_user_profile}"
-
 	puts "\r\n - recycling:"
 	puts "    - logEventOnRecycle: #{p.recycling.logEventOnRecycle}"
 	puts "    - periodic_restart.schedulecount: #{p.recycling.periodic_restart.schedule.size}"

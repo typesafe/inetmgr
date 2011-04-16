@@ -14,8 +14,10 @@ class Configuration
 
 private
 
-	def get_config_section section_name
+	def get_admin_section section_name
 		@admin_manager.GetAdminSection(section_name, @admin_manager.CommitPath)
 	end
+
+
 	
 end

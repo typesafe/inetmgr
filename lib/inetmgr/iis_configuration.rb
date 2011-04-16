@@ -1,3 +1,6 @@
+require File.join(File.expand_path(File.dirname(__FILE__)), 'iis_object/site.rb')
+require File.join(File.expand_path(File.dirname(__FILE__)), 'iis_object/application_pool.rb')
+require File.join(File.expand_path(File.dirname(__FILE__)), 'iis_object/auto_start_provider.rb')
 
 # Represents the local IIS configuration settings (meta base).
 class IisConfiguration < Configuration
@@ -14,19 +17,19 @@ class IisConfiguration < Configuration
 	
 	# Gets all configured web sites.
     def get_sites
-		s = get_config_section "system.applicationHost/sites"
+		s = get_admin_section "system.applicationHost/sites"
 	    IisObjectCollection.new s.Collection, :site, Site, lambda { |site| site.id = s.Collection.Count + 1 }
     end
 
 	# Gets all configure application pools.
     def get_application_pools
-		s = get_config_section "system.applicationHost/applicationPools"
+		s = get_admin_section "system.applicationHost/applicationPools"
 		IisObjectCollection.new s.Collection, :add, ApplicationPool
     end
 
 	# Gets all configured service auto start providers.
 	def get_auto_start_providers
-		s = get_config_section "system.applicationHost/serviceAutoStartProviders"
+		s = get_admin_section "system.applicationHost/serviceAutoStartProviders"
 		IisObjectCollection.new s.Collection, :add, AutoStartProvider
 	end
 

@@ -1,4 +1,4 @@
-require '..\lib\inetmgr.rb'
+require '../lib/inetmgr.rb'
 
 IisConfiguration.configure do |cfg|
 	cfg.get_sites.add do |site|
