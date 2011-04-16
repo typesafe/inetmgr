@@ -70,14 +70,15 @@ class IisObject
 private
 
 	def method_missing(symbol, *args)
-		name = symbol.to_s
+		name = symbol.to_s.to_camel_case
 		if (/=$/.match(name))
+			
 			@element.Properties.Item(name.sub(/=$/, '')).Value = args[0]
 		else
 			@element.Properties.Item(name).Value
 		end
 	rescue WIN32OLERuntimeError
-		raise "property '#{symbol}'"
+		raise "property '#{symbol}' -> #{$!}"
 	end
 
 end
