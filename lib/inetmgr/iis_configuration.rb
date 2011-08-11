@@ -5,8 +5,8 @@ require File.join(File.expand_path(File.dirname(__FILE__)), 'iis_object/auto_sta
 # Represents the local IIS configuration settings (meta base).
 class IisConfiguration < Configuration
 
-	def initialize
-		super "MACHINE/WEBROOT/APPHOST"
+	def initialize(server = nil)
+		super "MACHINE/WEBROOT/APPHOST", server
 	end
 
 	def self.configure

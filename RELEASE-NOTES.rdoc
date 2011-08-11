@@ -1,11 +1,21 @@
 = inetmgr Release Notes
 
-== Latest Version (0.3.0)
+== Latest Version (0.5.0)
+
+- Added support for managing remote IIS instances (added server argument to COnfiguration class)
+
+== Previous Versions
+
+=== 0.4.0
+
+- removed mswin32 platform indfication from gemspec, this setting turned out to be a bit too inconsistent
+- added method_missing override and conventional ruby_style to camelCase conversion, this avoid declaring properties that just change due to naming conventions
+- added wrapper classes for process model, periodic satrt, etc.
+
+=== 0.3.0
 
 - more property mappings for ApplicationPool & Site.
 - Added support for site-level configuration (only appSettings, for now).
-
-== Previous Versions
 
 === 0.2.1
 

@@ -1,8 +1,8 @@
 
 class SiteConfiguration < Configuration
 
-	def initialize(name)
-		super "MACHINE/WEBROOT/APPHOST/#{name}"
+	def initialize(name, server = nil)
+		super "MACHINE/WEBROOT/APPHOST/#{name}", server
 	end
 
 	def get_app_settings
