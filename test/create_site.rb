@@ -22,5 +22,10 @@ IisConfiguration.configure do |cfg|
 				dir.physical_path = "D:\\temp"
 			end
 		end
+
+		site.log_file.directory = 'D:\logs'
+		site.log_file.period = 'Hourly'
+		site.log_file.format = 'IIS'
+		site.log_file.log_ext_file_flags = 'Date, Time, ClientIP, Method, HttpStatus, BytesSent, TimeTaken, Referer, UserAgent'
 	end
 end
