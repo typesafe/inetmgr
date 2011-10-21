@@ -1,10 +1,14 @@
 = inetmgr Release Notes
 
-== Latest Version (0.5.0)
+== Latest Version (0.6.0)
 
-- Added support for managing remote IIS instances (added server argument to COnfiguration class)
+- Merged pull request from Scott Baldwin (https://github.com/scottsbaldwin) who was so kind to add support for configuring site log files.
 
 == Previous Versions
+
+== 0.5.0
+
+- Added support for managing remote IIS instances (added server argument to Configuration class)
 
 === 0.4.0
 
