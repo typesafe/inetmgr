@@ -1,3 +1,5 @@
+module Inetmgr
+
 # Represents a collection of IIS configuration objects.
 class IisObjectCollection
   include Enumerable
@@ -15,7 +17,7 @@ class IisObjectCollection
 	def count
 		size
 	end
-	
+
     def [](index)
 		return @type.new @collection_element.Item index
     end
@@ -33,14 +35,14 @@ class IisObjectCollection
 		added
     end
 
-	def find 
+	def find
 		size.times do |i|
 			instance = self[i]
 			return instance if yield(instance)
 		end
 		nil
 	end
-	
+
 	def exists(name)
 		!(find {|s| s.name == name}).nil?
 	end
@@ -48,4 +50,5 @@ class IisObjectCollection
     def remove(index)
 	    @collection_element.DeleteElement index
     end
+end
 end

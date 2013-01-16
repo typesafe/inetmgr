@@ -3,7 +3,7 @@ require './spec_env.rb'
 describe "When getting a sites app settings" do
 
 	before(:all) do
-		iis_cfg = IisConfiguration.new
+		iis_cfg = Inetmgr::IisConfiguration.new
 		site = iis_cfg.get_sites.find { |s| s.name= 'thuis.jolena.be' }
 		site.configure do |site_cfg|
 			@connection_strings = site_cfg.get_connection_strings
