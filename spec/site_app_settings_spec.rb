@@ -3,7 +3,7 @@ require './spec_env.rb'
 describe "When getting a sites connection strings" do
 
 	before(:all) do
-		iis_cfg = IisConfiguration.new
+		iis_cfg = Inetmgr::IisConfiguration.new
 		site = iis_cfg.get_sites.find { |s| s.name= 'thuis.jolena.be' }
 		site.configure do |site_cfg|
 			@app_settings = site_cfg.get_connection_strings
@@ -19,7 +19,7 @@ end
 describe "When changing an app setting" do
 
 	before(:all) do
-		@iis_cfg = IisConfiguration.new
+		@iis_cfg = Inetmgr::IisConfiguration.new
 		site = @iis_cfg.get_sites.find { |s| s.name= 'thuis.jolena.be' }
 		site.configure do |site_cfg|
 			@previous = site_cfg.get_app_settings[0].value
@@ -40,7 +40,7 @@ end
 describe "When adding an app setting" do
 
 	before(:all) do
-		@iis_cfg = IisConfiguration.new
+		@iis_cfg = Inetmgr::IisConfiguration.new
 		site = @iis_cfg.get_sites.find { |s| s.name= 'thuis.jolena.be' }
 		site.configure do |site_cfg|
 			@previous = site_cfg.get_app_settings.size

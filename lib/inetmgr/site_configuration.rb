@@ -1,3 +1,4 @@
+module Inetmgr
 
 class SiteConfiguration < Configuration
 
@@ -24,11 +25,13 @@ class SiteConfiguration < Configuration
 	def get_service_model_settings
 		IisObject.new get_admin_section("system.serviceModel")
 	end
-	
+
 private
 
 	def get_collection(name)
 		IisObjectCollection.new get_admin_section(name).Collection, :add, IisObject
 	end
+
+end
 
 end

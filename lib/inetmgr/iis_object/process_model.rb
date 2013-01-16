@@ -1,4 +1,5 @@
-# Specifies security, performance, health, and reliability features of application pools.
+module Inetmgr
+  # Specifies security, performance, health, and reliability features of application pools.
 class ProcessModel < IisObject
 
 	Identity_type_map = [:system, :local_service, :network_service, :specific_user, :application_pool_identity]
@@ -14,5 +15,7 @@ class ProcessModel < IisObject
 	prop :user_name, :userName
 	#prop :password
 	prop :load_user_profile, :loadUserProfile
+
+end
 
 end

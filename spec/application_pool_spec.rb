@@ -3,7 +3,7 @@ require 'spec_env'
 describe "When adding a new application pool" do
 
 	before(:all) do
-		@pools = IisConfiguration.new.get_application_pools
+		@pools = Inetmgr::IisConfiguration.new.get_application_pools
 		@before_count = @pools.size
 		@pool = @pools.add do |p|
 			p.name = "tralala"

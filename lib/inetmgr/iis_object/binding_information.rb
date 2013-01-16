@@ -1,3 +1,4 @@
+module Inetmgr
 
 class BindingInformation < IisObject
 
@@ -23,4 +24,5 @@ class BindingInformation < IisObject
 	def disable_ds_mapper
 		invoke_method("DisableDsMapper")
 	end
+end
 end

@@ -1,7 +1,8 @@
-require File.join(File.expand_path(File.dirname(__FILE__)), 'iis_object/site.rb')
-require File.join(File.expand_path(File.dirname(__FILE__)), 'iis_object/application_pool.rb')
-require File.join(File.expand_path(File.dirname(__FILE__)), 'iis_object/auto_start_provider.rb')
+require 'inetmgr/iis_object/site.rb'
+require 'inetmgr/iis_object/application_pool.rb'
+require 'inetmgr/iis_object/auto_start_provider.rb'
 
+module Inetmgr
 # Represents the local IIS configuration settings (meta base).
 class IisConfiguration < Configuration
 
@@ -33,4 +34,5 @@ class IisConfiguration < Configuration
 		IisObjectCollection.new s.Collection, :add, AutoStartProvider
 	end
 
+end
 end

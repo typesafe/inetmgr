@@ -1,3 +1,5 @@
-class AutoStartProvider < IisObject
+module Inetmgr
+  class AutoStartProvider < IisObject
 
+end
 end
