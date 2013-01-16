@@ -14,11 +14,17 @@ class IisConfiguration < Configuration
 		yield cfg
 		cfg.apply_changes
 	end
-	
-	# Gets all configured web sites.
+
+  def generate_id(collection)
+    count = collection.Count
+    arr = (0...count).map {|index| collection.Item(index).Properties.Item('Id').Value }
+    (arr.max) ? (arr.max + 1) : 1
+  end
+
+  # Gets all configured web sites.
     def get_sites
-		s = get_admin_section "system.applicationHost/sites"
-	    IisObjectCollection.new s.Collection, :site, Site, lambda { |site| site.id = s.Collection.Count + 1 }
+      s = get_admin_section "system.applicationHost/sites"
+      IisObjectCollection.new s.Collection, :site, Site, lambda { |site| site.id = generate_id(s.Collection) }
     end
 
 	# Gets all configure application pools.
