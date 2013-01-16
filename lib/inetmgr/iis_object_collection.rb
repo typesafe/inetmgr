@@ -1,6 +1,6 @@
 # Represents a collection of IIS configuration objects.
 class IisObjectCollection
-
+  include Enumerable
 	def initialize element, item_name, type, add_callback = nil
 		@collection_element = element
 		@item_name = item_name
