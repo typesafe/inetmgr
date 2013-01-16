@@ -18,4 +18,7 @@ spec = Gem::Specification.new do |s|
     s.files      = FileList["**/**/*"].to_a
     s.require_path      = "lib"
 
+    s.add_development_dependency 'uuid'
+    s.add_development_dependency 'rspec'
+
 end
