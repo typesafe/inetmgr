@@ -27,8 +27,20 @@ describe "When adding a new site" do
 		@site.should_not be_nil
 	end
 
-	it "the site should have the highest id" do
-		@site.id.should == @sites.size
-	end
+  context "When the site ids in IIS are not in ascending order" do
+    before(:all) do
+      @site2 = @sites.add { |s| s.name = generate_random_name }
+      @sites.remove(@sites.find_index { |site| site.id == @site.id })
+    end
 
+    it "the new site id should be one higher then the highest existing site id" do
+      ids = []
+      @sites.each { |s| ids << s.id }
+      max_id = ids.max
+
+      @site3 = @sites.add { |s| s.name = generate_random_name }
+
+      @site3.id.should == max_id + 1
+    end
+  end
 end
