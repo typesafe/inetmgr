@@ -42,3 +42,5 @@ class IisConfiguration < Configuration
 
 end
 end
+
+IisConfiguration = Inetmgr::IisConfiguration
