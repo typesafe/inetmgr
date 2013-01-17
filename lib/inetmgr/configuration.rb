@@ -1,5 +1,6 @@
+module Inetmgr
 
-class Configuration 
+class Configuration
 
 	def initialize(path, server = nil)
 		@admin_manager = WIN32OLE.new "Microsoft.ApplicationHost.WritableAdminManager", server
@@ -17,5 +18,7 @@ private
 	def get_admin_section(section_name)
 		@admin_manager.GetAdminSection(section_name, @admin_manager.CommitPath)
 	end
+
+end
 
 end

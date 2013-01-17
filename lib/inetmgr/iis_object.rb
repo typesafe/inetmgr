@@ -1,4 +1,5 @@
-# Represents an IIS configuration element. Serves as the base class for all
+module Inetmgr
+  # Represents an IIS configuration element. Serves as the base class for all
 # IIS artifacts like Site, Application and VirtualDirectory.
 class IisObject
 
@@ -57,7 +58,7 @@ class IisObject
 
 	def invoke_method name
 		method = @element.Methods.Item(name.to_s).CreateInstance()
-		
+
 		# TODO: if block_given? change method_missing to change this:
 		# method.Input.Properties.Item("key").Value = value
 		# in to this:
@@ -72,7 +73,7 @@ private
 	def method_missing(symbol, *args)
 		name = symbol.to_s.to_camel_case
 		if (/=$/.match(name))
-			
+
 			@element.Properties.Item(name.sub(/=$/, '')).Value = args[0]
 		else
 			@element.Properties.Item(name).Value
@@ -83,3 +84,5 @@ private
 
 end
 
+
+end

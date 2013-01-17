@@ -3,7 +3,8 @@ require File.join(File.expand_path(File.dirname(__FILE__)), 'site_logfile.rb')
 require File.join(File.expand_path(File.dirname(__FILE__)), 'binding_information.rb')
 require File.join(File.expand_path(File.dirname(__FILE__)), 'application.rb')
 
-class Site < IisObject
+module Inetmgr
+  class Site < IisObject
 
 	# name
 	# id
@@ -24,4 +25,5 @@ class Site < IisObject
 		cfg.apply_changes
 	end
 
+end
 end
