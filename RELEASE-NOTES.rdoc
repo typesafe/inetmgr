@@ -1,6 +1,10 @@
 = inetmgr Release Notes
 
-== Latest Version (0.6.0)
+== Latest Version (0.7.0)
+
+- Merged changes from Maxim-Filimonov (https://github.com/Maxim-Filimonov/inetmgr) who was so kind to make adding sites safer and namespacing the configuration classes to avoid conflicts with other libraries.
+
+== 0.6.0
 
 - Merged pull request from Scott Baldwin (https://github.com/scottsbaldwin) who was so kind to add support for configuring site log files.
 
